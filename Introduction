@@ -1,0 +1,97 @@
+What data types do each of these values represent?
+
+"A Clockwork Orange" - string
+42 - integer
+09/02/1945 - date
+98.7 -float
+$15.99 -money
+
+Explain when a database wousld be used. Explain when a text file would be used.
+
+text files would be used and readable by humans. The operating system will either lock the file and one of the instances will simply fail to write, or will overwrite the data written by the first.
+
+A database is an application that allows users to manage data through an interface. .while database are not readable by humans, these files are specialized structures that allow the database system to read quickly and change data. They can handle multiple applications accessing the data. 
+
+Describe one difference between SQL and other programming languages.
+
+javascript is a programming language and used to make web pages interactive. it can insert dynamic text into HTML and also known as browser’s language. while SQL (structured query language) is a database query language and often used hand in hand with web development for managing data. SQL is designed to manage data stored in relational databases (creating tables, adding data, finding data, deleting data, etc, ). 
+
+
+In your own words, explain how the pieces of a database system fit together at a high level.
+
+Let’s say the web sever phrases (breaks down and analyses) the request then passes the request to a specific application based on the analysis. The application server runs the requested application (needs data from data server) the application make a request to the database server (including security) once the request passes security and it’s processed, the database server returns the requested information to the application. The application creates a Web page and sends it to the Web server which sends it back to the requesting Web browser. A single SQL server can access multiple databases at one time and a single application may use data from more than one source. The database, development environment, and server application could all be running on a single computer. More commonly, with SQL Server projects, this is only done on developer's machine to provide easy access to everything for the developer. In production, it would be normal for the database and application to be on separate machines. Sometimes the Web server and application server are also separated.
+
+
+
+Explain the meaning of table, row, column, and value.
+
+column- set of data values of a particular simple type, (also known as attributes) The order of columns within a table has no meaning in the model. The model should still be correct even if the columns are rearranged.A column can contain only single values, never lists or repeating groups. Composite values must be separated into individual columns. Each column must have a unique value and must contain data of a single type
+
+row- single, structured data in a table, each row represent a related data and every row has the same structure.   
+
+table- the intersection of the column and row
+
+value - value must have a data type and implies some degree of information to the object attribute. 
+
+List three data types that can be used in a table.
+
+Given this payments table, provide an English description of the following queries and include their results:
+
+     SELECT date, amount
+     FROM payments; 
+
+A : selecting 2 columns (date and amount ) from payments table 
+	returning results (date and amount)  
+	date	amount
+	2016-05-01T00:00:00.000Z	1500.0000
+	2016-05-10T00:00:00.000Z	37.0000
+	2016-05-15T00:00:00.000Z	124.9300
+	2016-05-23T00:00:00.000Z	54.7200
+
+     
+
+
+	SELECT amount
+	FROM payments
+	 WHERE amount > 500;
+A: select the amount over 500 from payments 
+ amount
+ 1500.0000
+
+    	SELECT *
+   	FROM payments
+    	WHERE payee = 'Mega Foods';
+A: select all the columns from payments where payee is mega foods. 
+
+date	payee	amount	memo
+2016-05-15T00:00:00.000Z	Mega Foods	124.9300	Groceries
+
+Given this users table, write SQL queries using the following criteria and include the output:
+
+The email and sign-up date for the user named DeAndre Data.
+
+ SELECT email, signup
+ FROM users
+ WHERE name = 'DeAndre Data';
+
+email	signup
+datad@comcast.net	2008-01-20T00:00:00.000Z
+
+The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+ SELECT userid
+ FROM users
+ WHERE email = 'aleesia.algorithm@uw.edu'
+
+userid
+1
+
+All the columns for the user ID equal to 4.
+ SELECT *
+ FROM users
+ WHERE userid = 4; 
+
+userid	name	email	signup
+4	Brandy Boolean	bboolean@nasa.gov	1999-10-15T00:00:00.000Z
+
+
+
