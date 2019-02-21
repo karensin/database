@@ -33,8 +33,11 @@ ex: COMMIT ROLLBACK SET TRANSACTION
 
 3. What are some of the data types that can be used in tables? Give a real-world example of each type.
 
-data such as credit card statements where we have the date, merchant, amount spent or a table of music albums where we have song id, title, length. 
-
+data types such as:  
+	CHAR/VARCHAR could be used in lengthy string(an contain letters, numbers, and 		special characters) ISBN, reference code 
+	TEXT - holds string with max length  of 65,535 characters - single/simple words/	phrase, such as names/addresses    
+	LONGTEXT-holds strings with a max length of 4,294,967,295 characters- a 		description/longer texts 
+	Time- A time. Format: HH:MI:SS 
 
 4. Decide how to create a new table to hold a list of people invited to a wedding dinner. The table needs to have first and last names, whether they sent in their RSVP, the number of guests they are bringing, and the number of meals (1 for adults and 1/2 for children).
 
@@ -72,7 +75,7 @@ DROP TABLE tables;
 
 5.Write a command to create a new table to hold the books in a library with the columns ISBN, title, author, genre, publishing date, number of copies, and available copies.
  CREATE TABLE library (
- 	ISBN integer,
+ 	ISBN VARCHAR,
 	title text, 
 	author text,
 	genre text, 
@@ -81,25 +84,24 @@ DROP TABLE tables;
 	availableCopies integer
 ); 
 
+
 Find three books and add their information to the table.
 
-   INSERT INTO library (ISBN, title, 	 author,genre,publishingDate,totalCopies,availableCopies)
+INSERT INTO library (ISBN, title, 	 author,genre,publishingDate,totalCopies,availableCopies)
    VALUES  
-   (2345,'Becoming','Michelle Obama','inspirational ','2018-11-13/',10,2),
-   (6542,'The Border','Don Winslow','fiction','2019-02-26',3,2),
-   (8764,'Educated','Tara Westover','educational','2018-12-12',6,3);
-
+   (0684843285,'Becoming','Michelle Obama','inspirational ','2018-11-13/',10,3),
+   (0684843286,'The Border','Don Winslow','fiction','2019-02-26',3,2),
+   (0684843281,'Educated','Tara Westover','educational','2018-12-12',6,3);
 
 Someone has just checked out one of the books. Change the number of available copies to 1 fewer.
 
    UPDATE library 
-   SET availablecopies=1
+   SET availablecopies = availablecopies-1 
    WHERE title='Becoming' AND author ='Michelle Obama'	;
-
 
 Now one of the books has been added to the banned books list. Remove it from the table.
   
- DELETE FROM library WHERE isbn =8764 AND title= 'Educated';
+ DELETE FROM library WHERE isbn = 0684843281  AND title= 'Educated';
 
 
 
