@@ -1,0 +1,334 @@
+Exercises
+Submit your answers to the following questions.
+
+NOTE: Real-world examples must be your own and not based on the text or previous assignments.
+
+1. How do you find related data held in two separate data tables?
+
+A: Use JOIN method to combine 2 tables into one. 
+
+
+Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. Give a real-world example for each.
+
+INNER JOIN -- the simplest JOIN and most common, this query will return all of the records in table A and have a matching record in the right table 
+
+SELECT <select_list> 
+FROM Table_A A
+INNER JOIN Table_B B
+ON A.Key = B.Key
+
+Example: Given that we both have id numbers on both tables and table A has id numbers 1,2,3 and table B has 1,2,4. Only data from id 1 and 2 will be returned because they matched. 
+
+
+
+LEFT OUTER JOIN -- will return all of the records in the left table (A) regardless if any of those records have a match in the right table (B) It will also return any matching records from the right table. 
+
+SELECT <select_list>
+FROM Table_A A
+LEFT JOIN Table_B B
+ON A.Key = B.Key
+
+Example: Given that we both have id numbers on both tables and table A has id numbers 1,2,3 and table B has 1,2,4. All data from the left table will be returned and data id 1 and 2 will be returned because they matched both tables. 
+
+
+
+RIGHT OUTER JOHN - return all of the records in the right table (table B) regardless if any of those records have a match in the left table (table A). It will also return any matching records from the left table. 
+
+SELECT <select_list>
+FROM Table_A A
+RIGHT JOIN Table_B B
+ON A.Key = B.Key
+
+
+Define primary key and foreign key. Give a real-world example for each.
+
+A: A primary key is a column or a set of columns that uniquely identify a row in a table. A primary key should be short, stable and simple, it cannot be null/it can not be a duplicate. 
+ A foreign key is a field (or collection of fields) in a table whose value is required to match the value of the primary key for a second table, could be null and could be a duplicate. A table can have multiple foreign keys.  
+
+
+
+Real world example: 
+
+Table A  : 
+ID  NAME  GENDER 
+1   KAREN   F
+2   ANDY    M
+3   BONNIE  F 
+
+
+Table B MESSAGE :
+ID	USER ID  MESSAGE 
+1 	1   	HELLO KAREN
+2 	2   	THIS IS ANDY 
+3 	4   	WHAT IS THIS? 
+
+Assuming we are selecting from NAME, GENDER AND MESSAGE to return : 
+
+INNER JOIN WOULD RETURN 
+
+shared by the same id from table A and user id from table B 
+
+NAME   GENDER     MESSAGE 
+KAREN 	F	  HELLO KAREN
+ANDY	M	  THIS IS ANDY
+
+
+LEFT JOIN WOULD RETURN 
+
+NAME   GENDER     MESSAGE 
+KAREN 	F	  HELLO KAREN
+ANDY	M	  THIS IS ANDY
+BONNIE  F	  NULL 
+
+because the ids did not match for bonnie, NULL is returned. 	
+
+
+RIGHT JOIN WOULD RETURN 
+
+NAME   GENDER     MESSAGE 
+KAREN 	F	  HELLO KAREN
+ANDY	M	  THIS IS ANDY
+NULL 	NULL	  WHAT IS THIS? 
+
+same applies to right join, we returned null or name and gender because no ids were matched from table a and b. 
+
+
+
+WHILE PRIMARY KEY :  TABLE A _ ID 
+	FOREIGN KEY : TABLE B _ USER ID 
+
+
+
+4.Define aliasing.
+
+abbreviation of shore variable names to replace the table name in a query , such as d for department, a for address  
+
+
+5. Change this query so that you are using aliasing:
+
+SELECT professor.name, compensation.salary, compensation.vacation_days
+FROM professor 
+JOIN compensation 
+ON professor.id = compensation.professor_id;
+
+SELECT p.name, c.salary, c.vacation_days
+FROM professor AS p
+JOIN compensation as c 
+ON p.id= c.professor_id;
+
+ 
+6.Why would you use a NATURAL JOIN? Give a real-world example.
+
+Natural join will return columns with the same name of associated tables will appear once only. Meaning that 
+if we have : 
+
+TABLE A : FOODS 
++---------+--------------+-----------+------------+
+| ITEM_ID | ITEM_NAME    | ITEM_UNIT | COMPANY_ID |
++---------+--------------+-----------+------------+
+| 1       | Chex Mix     | Pcs       | 16         |
+| 6       | Cheez-It     | Pcs       | 15         |
+| 2       | BN Biscuit   | Pcs       | 15         |
+| 3       | Mighty Munch | Pcs       | 17         |
+| 4       | Pot Rice     | Pcs       | 15         |
+| 5       | Jaffa Cakes  | Pcs       | 18         |
+| 7       | Salt n Shake | Pcs       |            |
++---------+--------------+-----------+------------+
+
+AND 
+TABLE B: COMPANT
+ 
++------------+---------------+--------------+
+| COMPANY_ID | COMPANY_NAME  | COMPANY_CITY |
++------------+---------------+--------------+
+| 18         | Order All     | Boston       |
+| 15         | Jack Hill Ltd | London       |
+| 16         | Akas Foods    | Delhi        |
+| 17         | Foodies.      | London       |
+| 19         | sip-n-Bite.   | New York     |
++------------+---------------+--------------+
+
+if we use 
+SELECT *
+FROM table1
+NATURAL JOIN table2;
+
+it will return: 
+COMPANY_ID COMPANY_NAME    COMPANY_CITY    ITEM_ID    ITEM_NAME       ITEM_UNIT
+---------- --------------- --------------- ---------- --------------- ----------
+16         Akas Foods      Delhi           1          Chex Mix        Pcs
+15         Jack Hill Ltd   London          6          Cheez-It        Pcs
+15         Jack Hill Ltd   London          2          BN Biscuit      Pcs
+17         Foodies.        London          3          Mighty Munch    Pcs
+15         Jack Hill Ltd   London          4          Pot Rice        Pcs
+18         Order All       Boston          5          Jaffa Cakes     Pcs
+
+
+However, because natural JOIN and inner join are similar, we can compare it with inner join where if we query : 
+SELECT * 
+FROM company 
+INNER JOIN foods 
+ON company.company_id = foods.company_id;
+
+it will return: 
+
+COMPANY_ID COMPANY_NAME    COMPANY_CITY    ITEM_ID    ITEM_NAME       ITEM_UNIT  COMPANY_ID
+---------- --------------- --------------- ---------- --------------- ---------- ----------
+16         Akas Foods      Delhi           1          Chex Mix        Pcs        16
+15         Jack Hill Ltd   London          6          Cheez-It        Pcs        15
+15         Jack Hill Ltd   London          2          BN Biscuit      Pcs        15
+17         Foodies.        London          3          Mighty Munch    Pcs        17
+15         Jack Hill Ltd   London          4          Pot Rice        Pcs        15
+18         Order All       Boston          5          Jaffa Cakes     Pcs        18
+
+
+In inner join, Company IDs are included twice where Natural JOIN will not return duplicate columns. 
+
+
+
+7.Using this Employee schema and data, write queries to find the following information:
+List all employees and all shifts.
+
+
+
+SELECT e.name, s.date, s.start_time, s.end_time	
+FROM employees AS e
+JOIN shifts AS s ON s.id = e.id
+JOIN scheduled_shifts AS ss
+ON s.id= ss.employee_id;
+
+
+name			date		start_time	end_time
+Hermione Granger	1998-03-09	08:00:00	12:00:00
+Hermione Granger	1998-03-09	08:00:00	12:00:00
+Hermione Granger	1998-03-09	08:00:00	12:00:00
+Hermione Granger	1998-03-09	08:00:00	12:00:00
+Hermione Granger	1998-03-09	08:00:00	12:00:00
+Ronald Weasley		1998-03-09	08:00:00	16:00:00
+Ronald Weasley		1998-03-09	08:00:00	16:00:00
+Luna Lovegood		1998-03-09	12:00:00	16:00:00
+Luna Lovegood		1998-03-09	12:00:00	16:00:00
+Luna Lovegood		1998-03-09	12:00:00	16:00:00
+Draco Malfoy		1998-03-09	12:00:00	20:00:00
+Draco Malfoy		1998-03-09	12:00:00	20:00:00
+Draco Malfoy		1998-03-09	12:00:00	20:00:00
+Padma Patil		1998-03-09	16:00:00	20:00:00
+Padma Patil		1998-03-09	16:00:00	20:00:00
+Padma Patil		1998-03-09	16:00:00	20:00:00
+Padma Patil		1998-03-09	16:00:00	20:00:00
+Padma Patil		1998-03-09	16:00:00	20:00:00
+Padma Patil		1998-03-09	16:00:00	20:00:00
+Cho Chang		1998-03-10	12:00:00	16:00:00
+Cho Chang		1998-03-10	12:00:00	16:00:00
+Dean Thomas		1998-03-10	12:00:00	20:00:00
+Dean Thomas		1998-03-10	12:00:00	20:00:00
+
+
+8. Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
+
+Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+
+SELECT v.first_name,v.last_name, d.name
+FROM volunteers AS v
+LEFT JOIN dogs AS d 
+ON v.foster_dog_id = d.id; 
+
+name	first_name	last_name	date
+Mushi	Arabella	Figg	2019-02-03T00:00:00.000Z
+Victoire	Argus	Filch	2019-02-08T00:00:00.000Z
+
+
+The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy 
+Tail" social media promotion which posts recent successful adoptions.
+
+SELECT c.name, a.first_name,a.last_name, ca.date 
+FROM cats AS c 
+INNER JOIN cat_adoptions AS ca ON ca.cat_id= c.id 
+INNER JOIN adopters AS a ON a.id=ca.adopter_id
+WHERE ca.date  > CURRENT_DATE - INTERVAL '30 DAYS';
+
+
+
+
+Create a list of adopters who have not yet chosen a dog to adopt.
+
+select a.first_name ,a.last_name
+from adopters as a
+left outer join dog_adoptions as da 
+on da.adopter_id= a.id 
+where a.id NOT IN (SELECT adopter_id FROM dog_adoptions);
+
+
+
+Lists of all cats and all dogs who have not been adopted.
+
+SELECT cats.name
+FROM cats
+LEFT OUTER JOIN cat_adoptions 
+ON cats.id = cat_adoptions.cat_id
+WHERE cat_adoptions.adopter_id IS NULL;
+
+
+name
+Seashell
+Nala
+
+
+ SELECT dogs.name 
+ FROM dogs
+ LEFT OUTER JOIN dog_adoptions 
+ ON dogs.id = dog_adoptions.dog_id
+ WHERE dog_adoptions.adopter_id IS NULL;
+
+name
+Munchkin
+Boujee
+Lassie
+Marley
+Marmaduke
+
+The name of the person who adopted Rosco.
+
+  SELECT a.first_name, a.last_name, 
+  FROM dogs AS d
+  INNER JOIN dog_adoptions AS da
+  ON d.id = da.dog_id 
+  INNER JOIN adopters AS a 
+  ON da.adopter_id = a.id; 
+
+
+first_name	last_name
+Argus	Filch
+
+
+
+Using this Library schema and data, write queries applying the following scenarios and include the results:
+
+To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+
+
+
+SELECT *
+FROM holds
+INNER JOIN patrons as p 
+ON holds.patron_id = p.id 
+INNER JOIN books AS b
+ON holds.isbn= b.isbn
+WHERE b.title='Advanced Potion-Making' 
+order by rank asc;
+
+List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
+
+
+SELECT *
+FROM holds
+INNER JOIN patrons as p 
+ON holds.patron_id = p.id 
+INNER JOIN books AS b
+ON holds.isbn= b.isbn
+WHERE b.title='Advanced Potion-Making' 
+order by rank asc;
+
+
+
+
