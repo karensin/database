@@ -20,7 +20,7 @@ Intake teams typically guess the breed of shelter dogs, so the breed column may 
 Display the name, gender, and age of all dogs that are part Labrador.
 SELECT name, gender , age 
 FROM dogs 
-where breed LIKE '%labrador'; 
+where breed LIKE '%labrador%'; 
 
 Display the ids of all dogs that are under 1 year old.
 
