@@ -319,16 +319,12 @@ order by rank asc;
 
 List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
 
-
 SELECT *
-FROM holds
-INNER JOIN patrons as p 
-ON holds.patron_id = p.id 
-INNER JOIN books AS b
-ON holds.isbn= b.isbn
-WHERE b.title='Advanced Potion-Making' 
-order by rank asc;
-
-
+FROM transactions as t
+RIGHT JOIN patrons as p 
+ON t.patron_id = p.id 
+LEFT JOIN books AS b
+ON t.isbn= b.isbn
+WHERE t."checked_in_date" IS null;
 
 
